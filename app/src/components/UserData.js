@@ -23,28 +23,34 @@ class UserData extends Component {
 
         var justCommits = [];
         var data = res.data;
-        for (var i = 0; i < data.length; i++) {
-          const event = data[i];
+        data.forEach(function(event) {
           const commits = event.payload.commits;
           if (commits) {
-            for (var j = 0; j < commits.length; j++) {
-              const commit = commits[j];
+            commits.forEach(function(commit) {
               justCommits.push(commit);
-              // console.log(commit);
-            }
+            })
           }
-        }
+        })
         console.log(justCommits);
+        this.setState({userCommits:justCommits})
     })
   }
 
   render() {
     return (
       <div>
-        <div> Hello World!</div>
+        <div> GitHub Api Challenge</div>
         <h2>User Name: {this.state.userName}</h2>
         <img alt="userPic" src={this.state.userPic} />
-
+        <ul>
+          <h3>Latest commits</h3>
+          {this.state.userCommits.map((userCommit, index) =>(
+            <li key={index}>
+              Sha: {userCommit.sha} <br/>
+              Message: {userCommit.message} <br/>
+              Url: {userCommit.url}</li>
+          ))}
+        </ul>
 
       </div>
     )
