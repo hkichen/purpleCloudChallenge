@@ -7,14 +7,13 @@ class UserData extends Component {
     this.state = { 
       userName : "",
       userPic : "",
-      userCommits: {}
+      userCommits: []
     };
   }
   
   componentDidMount() {
     axios.get('https://api.github.com/users/hkichen/events')
       .then(res => {
-        //console.log(res.data)
         var searchedName = res.data[0].actor.display_login;
         var searchedPic = res.data[0].actor.avatar_url;
         this.setState({ 
@@ -22,12 +21,20 @@ class UserData extends Component {
           userPic : searchedPic 
         })
 
+        var justCommits = [];
         var data = res.data;
         for (var i = 0; i < data.length; i++) {
-          var payload = data[i].payload
-          console.log(payload)
+          const event = data[i];
+          const commits = event.payload.commits;
+          if (commits) {
+            for (var j = 0; j < commits.length; j++) {
+              const commit = commits[j];
+              justCommits.push(commit);
+              // console.log(commit);
+            }
+          }
         }
-        
+        console.log(justCommits);
     })
   }
 
@@ -37,6 +44,8 @@ class UserData extends Component {
         <div> Hello World!</div>
         <h2>User Name: {this.state.userName}</h2>
         <img alt="userPic" src={this.state.userPic} />
+
+
       </div>
     )
   }
