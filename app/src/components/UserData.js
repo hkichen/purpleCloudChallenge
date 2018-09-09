@@ -23,7 +23,10 @@ class UserData extends Component {
         })
 
         var data = res.data;
-        console.log(data[0].payload)
+        for (var i = 0; i < data.length; i++) {
+          var payload = data[i].payload
+          console.log(payload)
+        }
         
     })
   }
