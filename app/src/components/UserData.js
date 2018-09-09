@@ -32,7 +32,12 @@ class UserData extends Component {
           }
         })
         console.log(justCommits);
-        this.setState({userCommits:justCommits})
+        var just3 = [];
+        just3.push(justCommits[0])
+        just3.push(justCommits[1])
+        just3.push(justCommits[2])
+        console.log(just3)
+        this.setState({userCommits:just3})
     })
   }
 
