@@ -8,12 +8,7 @@ class UserData extends Component {
       userName : "",
       userPic : "",
       userCommits: [],
-      pullEvent: 0,
-      watchEvent: 0,
-      pullRequestEvent: 0,
-      createEvent:0,
-      publicEvent: 0
-
+      userEvents:[]
     };
   }
   
@@ -39,39 +34,31 @@ class UserData extends Component {
             })
           }
         })
-        //console.log(justCommits);
+
         let just3 = [];
         just3.push(justCommits[0])
         just3.push(justCommits[1])
         just3.push(justCommits[2])
-        //console.log(just3)
         this.setState({userCommits:just3})
 
         //getting all events 
-        //console.log(data)
         var events = []
         data.forEach(function(event) {
-          // console.log(event.type)
           events.push(event.type)
         })
         
         events.sort();
-        console.log(events);
 
         //counting event types
-        var current = null;
-        var cnt = 0;
-        for (var i = 0; i <= events.length; i++) {
-          if (events[i] !== current) {
-            if (cnt > 0) {
-              console.log(current + ' occured ' + cnt + ' time(s)');
-            }
-            current = events[i];
-            cnt = 1;
-          } else {
-              cnt++;
-          }
-      }
+        var counts = {};
+        events.forEach(function(x) { 
+          counts[x] = (counts[x] || 0)+1; 
+        });
+        
+        var eventCounts = []
+        eventCounts.push(counts)
+        this.setState({userEvents: eventCounts})
+          
     })
   }
 
@@ -94,7 +81,32 @@ class UserData extends Component {
               Url: {userCommit.url}</li>
           ))}
         </ul>
-
+        
+        <table className="table">
+          <thead>
+            <tr>
+              <th scope="col">Create Events</th>
+              <th scope="col">Push Events</th>
+              <th scope="col">Pull Request Events</th>
+              <th scope="col">Public Events</th>
+              <th scope="col">Watch Events</th>
+            </tr>
+          </thead>
+          <tbody>
+            {this.state.userEvents.map((userEvent, index) => {
+              return (
+                <tr key={index}>
+                  <td>{userEvent.CreateEvent}</td>
+                  <td>{userEvent.PushEvent}</td>
+                  <td>{userEvent.PullRequestEvent}</td>
+                  <td>{userEvent.PublicEvent}</td>
+                  <td>{userEvent.WatchEvent}</td>
+                </tr>
+              )
+            })}
+          </tbody>
+        </table>
+      
       </div>
     )
   }
