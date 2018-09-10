@@ -31,6 +31,7 @@ class UserData extends Component {
         //getting the commits
         var justCommits = [];
         var data = res.data;
+        console.log(data)
         data.forEach(function(event) {
           const commits = event.payload.commits;
           if (commits) {
@@ -75,6 +76,10 @@ class UserData extends Component {
     });
   };
 
+  handleSubmit = event => {
+    event.preventDefault();
+    this.searchUser(this.state.search);
+  };
 
 
   render() {
@@ -96,12 +101,14 @@ class UserData extends Component {
         <img alt="userPic" src={this.state.userPic} />
         <ul>
           <h3>Latest commits</h3>
-          {this.state.userCommits.map((userCommit, index) =>(
-            <li key={index}>
-              Sha: {userCommit.sha} <br/>
-              Message: {userCommit.message} <br/>
-              Url: {userCommit.url}</li>
-          ))}
+          {this.state.userCommits.filter((commit) => commit).map((userCommit, index) => {
+            return (
+              <li key={index}>
+                Sha: {userCommit.sha} <br/>
+                Message: {userCommit.message} <br/>
+                Url: {userCommit.url}</li>
+            )})
+          }
         </ul>
         
         <table className="table">
