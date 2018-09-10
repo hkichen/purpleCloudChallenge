@@ -84,7 +84,7 @@ class UserData extends Component {
 
   render() {
     return (
-      <div>
+      <div classname="content">
         <h1 className="title"> GitHub User Information Search </h1>
         <div className="searchBar">
           <input 
@@ -98,21 +98,21 @@ class UserData extends Component {
           <button onClick={this.handleSubmit}>Search</button>
         </div>
 
-        <div className="row grid-divider">
+        <div className="row">
           <div className="col-md-6">
-            <h4>User Name: {this.state.userName}</h4>
+            <h3>Username: {this.state.userName}</h3>
             <img alt="userPic" src={this.state.userPic} />
           </div>
 
           <div className="col-md-6">
             <ul>
-            <h3>Latest Commits</h3>
+            <h3 className="commits">Latest Commits</h3>
             {this.state.userCommits.filter((commit) => commit).map((userCommit, index) => {
               return (
                 <li key={index}>
-                  Sha: {userCommit.sha} <br/>
-                  Message: {userCommit.message} <br/>
-                  Url: {userCommit.url}</li>
+                  <strong>Sha:</strong> {userCommit.sha} <br/>
+                  <strong>Message:</strong> "{userCommit.message}" <br/>
+                  <strong>Url:</strong> {userCommit.url}</li>
               )})
             }
             </ul>
@@ -143,7 +143,6 @@ class UserData extends Component {
             })}
           </tbody>
         </table>
-      
       </div>
     )
   }

@@ -8,6 +8,26 @@ body {
     text-align: center;
 }
 
+.title {
+    -webkit-animation-duration: 1s;
+        -webkit-animation-name: glow;
+        -webkit-animation-direction: alternate;
+        -webkit-animation-iteration-count: infinite;
+        animation-duration: 1s;
+        animation-name: glow;
+        animation-direction: alternate;
+        animation-iteration-count: infinite;
+}
+
+@-webkit-keyframes glow {
+    from { text-shadow: 0 0 10px #3ab8b8; }
+    to { text-shadow: 0 0 20px #b6fffb; }
+}
+
+input {
+    border-radius: 5px;
+}
+
 .searchBar {
     padding-top: 10px;
     padding-bottom: 25px;
@@ -15,20 +35,32 @@ body {
 }
 
 button {
-    margin-left: 5px
+    margin-left: 5px;
+    border-radius: 5px;
+    background: #3ab8b8;
+}
+
+button:hover {
+    background: #185f5c;
+    color: #ffffff;
 }
 
 li {
-    overflow: hidden;
+    overflow: scroll;
+    overflow-y: hidden;
     padding: 5px 0 5px 0px;
     border-bottom: #424242 solid 1px;
 }
 
-h3 {
+.commits {
     border-bottom: #424242 solid 4px;
 }
 
 .table {
     margin-top: 10px;
     margin-bottom: 35px;
+}
+
+td, th {
+    text-align: center;
 }
