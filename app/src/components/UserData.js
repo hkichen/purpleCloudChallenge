@@ -1,19 +1,24 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import API from './API';
 
 class UserData extends Component {
   constructor(props) {
     super(props);
     this.state = { 
+      search:"",
       userName : "",
       userPic : "",
       userCommits: [],
       userEvents:[]
     };
   }
-  
+
   componentDidMount() {
-    axios.get('https://api.github.com/users/hkichen/events')
+    this.searchUser("hkichen")
+  }
+  
+  searchUser(username) {
+    API.search(username)
       .then(res => {
         //getting the user name and pic
         var searchedName = res.data[0].actor.display_login;
@@ -62,13 +67,30 @@ class UserData extends Component {
     })
   }
 
+  handleInputChange = event => {
+    const name = event.target.name;
+    const value = event.target.value;
+    this.setState({
+      [name]: value
+    });
+  };
+
+
+
   render() {
     return (
       <div>
         <div> GitHub Api Challenge</div>
         <div className="searchBar">
-          <input placeholder="enter a username" />
-          <button>Search</button>
+          <input 
+            onChange={this.handleInputChange}
+            value={this.state.search}
+            name="search"
+            type="text"
+            placeholder="Search for a user"
+            id="search" 
+          />
+          <button onClick={this.handleSubmit}>Search</button>
         </div>
         <h2>User Name: {this.state.userName}</h2>
         <img alt="userPic" src={this.state.userPic} />
