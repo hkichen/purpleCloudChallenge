@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import API from './API';
+import './page.css';
 
 class UserData extends Component {
   constructor(props) {
@@ -31,7 +32,6 @@ class UserData extends Component {
         //getting the commits
         var justCommits = [];
         var data = res.data;
-        console.log(data)
         data.forEach(function(event) {
           const commits = event.payload.commits;
           if (commits) {
@@ -85,31 +85,39 @@ class UserData extends Component {
   render() {
     return (
       <div>
-        <div> GitHub Api Challenge</div>
+        <h1 className="title"> GitHub User Information Search </h1>
         <div className="searchBar">
           <input 
             onChange={this.handleInputChange}
             value={this.state.search}
             name="search"
             type="text"
-            placeholder="Search for a user"
+            placeholder=" Search by username..."
             id="search" 
           />
           <button onClick={this.handleSubmit}>Search</button>
         </div>
-        <h2>User Name: {this.state.userName}</h2>
-        <img alt="userPic" src={this.state.userPic} />
-        <ul>
-          <h3>Latest commits</h3>
-          {this.state.userCommits.filter((commit) => commit).map((userCommit, index) => {
-            return (
-              <li key={index}>
-                Sha: {userCommit.sha} <br/>
-                Message: {userCommit.message} <br/>
-                Url: {userCommit.url}</li>
-            )})
-          }
-        </ul>
+
+        <div className="row grid-divider">
+          <div className="col-md-6">
+            <h4>User Name: {this.state.userName}</h4>
+            <img alt="userPic" src={this.state.userPic} />
+          </div>
+
+          <div className="col-md-6">
+            <ul>
+            <h3>Latest Commits</h3>
+            {this.state.userCommits.filter((commit) => commit).map((userCommit, index) => {
+              return (
+                <li key={index}>
+                  Sha: {userCommit.sha} <br/>
+                  Message: {userCommit.message} <br/>
+                  Url: {userCommit.url}</li>
+              )})
+            }
+            </ul>
+          </div>
+        </div>
         
         <table className="table">
           <thead>
